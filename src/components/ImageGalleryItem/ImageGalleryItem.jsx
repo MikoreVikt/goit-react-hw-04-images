@@ -1,40 +1,69 @@
-import { Component } from "react";
+import { useState } from "react";
 import PropTypes from 'prop-types';
 import { Li, Img } from "./ImageGalleryItem.styled";
 import { Modal } from "components/Modal/Modal";
 
-export class ImageGalleryItem extends Component {
-    static propTypes = {
-        src: PropTypes.string.isRequired,
-        alt: PropTypes.string.isRequired,
-        largeImageUrl: PropTypes.string,
-    }
-    
-    state = {
-        showModal: false,
+export const ImageGalleryItem = ({ src, alt, largeImageURL }) => {
+    const [showModal, setShowModal] = useState(false)
+
+    const toggleModal = () => {
+        setShowModal(!showModal)
     }
 
-    toggleModal = () => {
-        this.setState(({ showModal }) => ({
-            showModal: !showModal
-        }))
-    }
-
-    render() {
-        const { showModal  } = this.state
-        const { src, alt, largeImageURL  } = this.props
-        
-        return (
+    return (
             <Li>
                 <Img
-                    onClick={this.toggleModal}
+                    onClick={toggleModal}
                     src={src}
                     alt={alt}
                 />
                 {showModal && (
-                    <Modal onClose={this.toggleModal} src={largeImageURL} alt={alt} />
+                    <Modal onClose={toggleModal} src={largeImageURL} alt={alt} />
                 )}
             </Li>
         )
-    }
 }
+
+ImageGalleryItem.propTypes = {
+    src: PropTypes.string.isRequired,
+    alt: PropTypes.string.isRequired,
+    largeImageUrl: PropTypes.string,
+}
+
+
+// ====================================================================================
+// export class ImageGalleryItem extends Component {
+//     static propTypes = {
+//         src: PropTypes.string.isRequired,
+//         alt: PropTypes.string.isRequired,
+//         largeImageUrl: PropTypes.string,
+//     }
+    
+//     state = {
+//         showModal: false,
+//     }
+
+    // toggleModal = () => {
+    //     this.setState(({ showModal }) => ({
+    //         showModal: !showModal
+    //     }))
+    // }
+
+//     render() {
+//         const { showModal  } = this.state
+//         const { src, alt, largeImageURL  } = this.props
+        
+//         return (
+//             <Li>
+//                 <Img
+//                     onClick={this.toggleModal}
+//                     src={src}
+//                     alt={alt}
+//                 />
+//                 {showModal && (
+//                     <Modal onClose={this.toggleModal} src={largeImageURL} alt={alt} />
+//                 )}
+//             </Li>
+//         )
+//     }
+// }
